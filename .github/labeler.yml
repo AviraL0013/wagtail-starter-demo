@@ -17,3 +17,6 @@ ci:
 dependencies:
   - changed-files:
     - any-glob-to-any-file: ["requirements*.txt", "package*.json"]
+docs:
+  - changed-files:
+    - any-glob-to-any-file: ["*.md", "docs/**"]
