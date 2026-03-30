@@ -1,0 +1,19 @@
+frontend:
+  - changed-files:
+    - any-glob-to-any-file: ["**/*.js", "**/*.css", "**/*.html"]
+
+backend:
+  - changed-files:
+    - any-glob-to-any-file: ["**/*.py"]
+
+migrations:
+  - changed-files:
+    - any-glob-to-any-file: ["**/migrations/**"]
+
+ci:
+  - changed-files:
+    - any-glob-to-any-file: [".github/**"]
+
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file: ["requirements*.txt", "package*.json"]
