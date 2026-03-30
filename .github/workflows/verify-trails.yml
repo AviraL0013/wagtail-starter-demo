@@ -1,0 +1,44 @@
+name: Verify Trails
+
+on:
+  pull_request:
+    paths:
+      - "trails.json"
+      - "trails/**"
+
+jobs:
+  verify:
+    name: Validate trails.json
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate trails.json structure
+        run: |
+          python - <<'EOF'
+          import json, sys, os
+
+          with open("trails.json") as f:
+              trails = json.load(f)
+
+          errors = []
+          for trail in trails:
+              if "title" not in trail:
+                  errors.append(f"Missing 'title' in: {trail}")
+              if "steps" not in trail:
+                  errors.append(f"Missing 'steps' in: {trail}")
+              for step in trail.get("steps", []):
+                  if "url" not in step:
+                      errors.append(f"Missing 'url' in step: {step}")
+
+          if errors:
+              for e in errors:
+                  print(f"ERROR: {e}")
+              sys.exit(1)
+          else:
+              print(f"OK — {len(trails)} trails validated")
+          EOF
